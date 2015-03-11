@@ -9,12 +9,13 @@ public class AprioriFlat {
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =66.0;
+    double supportThresholdPer =33.0;
     int supportThreashold =0;
 
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
-    ArrayList<Rule> confidanceReduceOutput=new ArrayList<Rule>();
+    HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
+    ArrayList<Rule> confidanceReduceOutput2=new ArrayList<Rule>();
     double confidanceThresholdPer =50.0;
 
 
@@ -40,6 +41,8 @@ public class AprioriFlat {
 
         Map3();
         Reduce2();
+        Map4();
+        Reduce3();
 
         print();
     }
@@ -71,8 +74,8 @@ public class AprioriFlat {
             System.out.print("\n");
         }
         System.out.println("Rules\n");
-        for (int i = 0; i < confidanceReduceOutput.size(); i++) {
-            System.out.println(confidanceReduceOutput.get(i));
+        for (int i = 0; i < confidanceReduceOutput2.size(); i++) {
+            System.out.println(confidanceReduceOutput2.get(i));
         }
     }
 
@@ -164,6 +167,10 @@ public class AprioriFlat {
         }
     }
 
+    public void Map4(){
+
+    }
+
     public void Reduce2() {
         Iterator<ItemSet> itr=confidanceMapOutput.keySet().iterator();
         while(itr.hasNext()) {
@@ -181,13 +188,56 @@ public class AprioriFlat {
                     Integer numerator=superSets.get(superSet);
                     double confidence=((double)(numerator*100))/denominator;
                     if(confidence>=confidanceThresholdPer){
-                        confidanceReduceOutput.add(new Rule(subset,superSet.getSetDifference(subset),confidence));
+                        ItemSet q=superSet.getSetDifference(subset); //These lines must go to mapper 4
+                        HashMap<ItemSet,Double> Ps=confidanceReduceOutput1.get(q);
+                        if(Ps==null){
+                            Ps=new HashMap<ItemSet,Double>();
+                        }
+                        Ps.put(subset, confidence);
+                        confidanceReduceOutput1.put(q,Ps) ;  //These lines must go to mapper 4
                     }
                 }
             }
+            //System.out.println(confidanceReduceOutput1.size());
         }
     }
 
+    public void Reduce3() {
+        Iterator<ItemSet> itr=confidanceReduceOutput1.keySet().iterator();
+        while(itr.hasNext()) {
+            ItemSet q = itr.next();
+            HashMap<ItemSet,Double> Ps=confidanceReduceOutput1.get(q);
+
+            //Find Super sets
+            ArrayList<ItemSet> superSets=new ArrayList<ItemSet>();
+            Iterator<ItemSet> itr1=Ps.keySet().iterator();
+            while(itr1.hasNext()){
+                ItemSet a=itr1.next();
+                Iterator<ItemSet> itr2=Ps.keySet().iterator();
+                while(itr2.hasNext()){
+                    ItemSet b=itr2.next();
+                    if(!a.equals(b)){
+                        if(a.IsThisSetAsubstOf(b)){
+                            superSets.add(b);
+                        }
+                    }
+                }
+            }
+
+            //Remove supersets
+            for (int i = 0; i <superSets.size() ; i++) {
+                Ps.remove(superSets.get(i));
+            }
+
+            //Create rules
+            itr1=Ps.keySet().iterator();
+            while(itr1.hasNext()) {
+                ItemSet p = itr1.next();
+                confidanceReduceOutput2.add(new Rule(p,q,Ps.get(p)));
+            }
+
+        }
+    }
 
     public void addToConfidanceMapWithCombine(ItemSet source,Integer sourceVal,ItemSet subset){
         HashMap<ItemSet,Integer> sources=confidanceMapOutput.get(subset);

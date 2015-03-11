@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="349bb93c-9169-4798-9955-1aa21bb379c4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Apriori/AprioriFlat.class" afterPath="$PROJECT_DIR$/out/production/Apriori/AprioriFlat.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AprioriFlat.java" afterPath="$PROJECT_DIR$/src/AprioriFlat.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Apriori.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,27 +32,29 @@
       <file leaf-file-name="AprioriFlat.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.259259" vertical-offset="697" max-vertical-offset="6732">
-              <caret line="183" column="99" selection-start-line="183" selection-start-column="99" selection-end-line="183" selection-end-column="99" />
+            <state vertical-scroll-proportion="0.7407407" vertical-offset="408" max-vertical-offset="7582">
+              <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#184#193#0" expanded="true" />
                 <element signature="e#256#273#0" expanded="true" />
                 <element signature="e#352#378#0" expanded="true" />
                 <element signature="e#530#564#0" expanded="true" />
-                <element signature="e#624#630#0" expanded="true" />
-                <element signature="e#3242#3251#0" expanded="true" />
-                <element signature="e#4863#4880#0" expanded="true" />
-                <element signature="e#8025#8026#0" expanded="true" />
-                <element signature="e#8073#8074#0" expanded="true" />
-                <element signature="e#8208#8209#0" expanded="true" />
-                <element signature="e#8250#8251#0" expanded="true" />
-                <element signature="e#8616#8617#0" expanded="true" />
-                <element signature="e#8661#8662#0" expanded="true" />
-                <element signature="e#9114#9122#0" expanded="true" />
-                <element signature="e#10323#10332#0" expanded="true" />
-                <element signature="e#10396#10405#0" expanded="true" />
-                <element signature="e#11005#11014#0" expanded="true" />
+                <element signature="e#648#681#0" expanded="true" />
+                <element signature="e#742#748#0" expanded="true" />
+                <element signature="e#3397#3406#0" expanded="true" />
+                <element signature="e#5018#5035#0" expanded="true" />
+                <element signature="e#7710#7719#0" expanded="true" />
+                <element signature="e#9850#9851#0" expanded="true" />
+                <element signature="e#9898#9899#0" expanded="true" />
+                <element signature="e#10033#10034#0" expanded="true" />
+                <element signature="e#10075#10076#0" expanded="true" />
+                <element signature="e#10441#10442#0" expanded="true" />
+                <element signature="e#10486#10487#0" expanded="true" />
+                <element signature="e#10939#10947#0" expanded="true" />
+                <element signature="e#12148#12157#0" expanded="true" />
+                <element signature="e#12221#12230#0" expanded="true" />
+                <element signature="e#12830#12839#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -368,27 +372,29 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.259259" vertical-offset="697" max-vertical-offset="6732">
-          <caret line="183" column="99" selection-start-line="183" selection-start-column="99" selection-end-line="183" selection-end-column="99" />
+        <state vertical-scroll-proportion="0.7407407" vertical-offset="408" max-vertical-offset="7582">
+          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#184#193#0" expanded="true" />
             <element signature="e#256#273#0" expanded="true" />
             <element signature="e#352#378#0" expanded="true" />
             <element signature="e#530#564#0" expanded="true" />
-            <element signature="e#624#630#0" expanded="true" />
-            <element signature="e#3242#3251#0" expanded="true" />
-            <element signature="e#4863#4880#0" expanded="true" />
-            <element signature="e#8025#8026#0" expanded="true" />
-            <element signature="e#8073#8074#0" expanded="true" />
-            <element signature="e#8208#8209#0" expanded="true" />
-            <element signature="e#8250#8251#0" expanded="true" />
-            <element signature="e#8616#8617#0" expanded="true" />
-            <element signature="e#8661#8662#0" expanded="true" />
-            <element signature="e#9114#9122#0" expanded="true" />
-            <element signature="e#10323#10332#0" expanded="true" />
-            <element signature="e#10396#10405#0" expanded="true" />
-            <element signature="e#11005#11014#0" expanded="true" />
+            <element signature="e#648#681#0" expanded="true" />
+            <element signature="e#742#748#0" expanded="true" />
+            <element signature="e#3397#3406#0" expanded="true" />
+            <element signature="e#5018#5035#0" expanded="true" />
+            <element signature="e#7710#7719#0" expanded="true" />
+            <element signature="e#9850#9851#0" expanded="true" />
+            <element signature="e#9898#9899#0" expanded="true" />
+            <element signature="e#10033#10034#0" expanded="true" />
+            <element signature="e#10075#10076#0" expanded="true" />
+            <element signature="e#10441#10442#0" expanded="true" />
+            <element signature="e#10486#10487#0" expanded="true" />
+            <element signature="e#10939#10947#0" expanded="true" />
+            <element signature="e#12148#12157#0" expanded="true" />
+            <element signature="e#12221#12230#0" expanded="true" />
+            <element signature="e#12830#12839#0" expanded="true" />
           </folding>
         </state>
       </provider>
