@@ -9,7 +9,7 @@ public class AprioriFlat {
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =33.0;
+    double supportThresholdPer =66.0;
     int supportThreashold =0;
 
 
@@ -54,8 +54,8 @@ public class AprioriFlat {
         transactions.add(new ItemSet(new String[]{"O","A","B","C","F","X"}));
         transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
         transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));
-
-
+       // transactions.add(new ItemSet(new String[]{"B","A","U","O","C","Z"}));
+       // transactions.add(new ItemSet(new String[]{"F","A","X","F","E","W"}));
     }
 
 
