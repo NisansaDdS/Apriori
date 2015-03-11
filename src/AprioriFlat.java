@@ -7,11 +7,15 @@ public class AprioriFlat {
 
     ArrayList<ItemSet> transactions=new ArrayList<ItemSet>();
 
-    HashMap<ItemSet,Integer> MapOutput=new HashMap<ItemSet,Integer>();
-    ArrayList<HashMap<ItemSet,Integer>> reduceOutputs=new ArrayList<HashMap<ItemSet,Integer>>();
-    double thresholdPer=66.0;
-    int threashold=0;
+    HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
+    ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
+    double supportThresholdPer =66.0;
+    int supportThreashold =0;
 
+
+    HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
+    ArrayList<Rule> confidanceReduceOutput=new ArrayList<Rule>();
+    double confidanceThresholdPer =50.0;
 
 
     public static void main(String[] args) {
@@ -23,16 +27,20 @@ public class AprioriFlat {
     public AprioriFlat() {
 
         loadTransactions();
-        threashold=(int)((thresholdPer*transactions.size())/100);
+        supportThreashold =(int)((supportThresholdPer *transactions.size())/100);
         Map1();
-        Reduce();
-        HashMap<ItemSet,Integer> newFrequentItems=reduceOutputs.get(reduceOutputs.size()-1);
-        //System.out.println(newFrequentItems.size());
+        Reduce1();
+        HashMap<ItemSet,Integer> newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
         while(newFrequentItems.size()!=0){
             Map2(newFrequentItems);
-            Reduce();
-            newFrequentItems=reduceOutputs.get(reduceOutputs.size()-1);
+            Reduce1();
+            newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
         }
+
+
+        Map3();
+        Reduce2();
+
         print();
     }
 
@@ -44,13 +52,17 @@ public class AprioriFlat {
         transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
         transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));
 
+
     }
 
 
     public void print(){
-        for (int i = 0; i < reduceOutputs.size(); i++) {
-            System.out.println("Generation " + i);
-            HashMap<ItemSet,Integer> output=reduceOutputs.get(i);
+        System.out.println("Frequent items\n");
+        for (int i = 0; i < supportReduceOutputs.size(); i++) {
+            HashMap<ItemSet,Integer> output= supportReduceOutputs.get(i);
+            if(!output.isEmpty()){
+                System.out.println("Generation " + i);
+            }
             Iterator<ItemSet> itr=output.keySet().iterator();
             while(itr.hasNext()) {
                 ItemSet is = itr.next();
@@ -58,22 +70,26 @@ public class AprioriFlat {
             }
             System.out.print("\n");
         }
+        System.out.println("Rules\n");
+        for (int i = 0; i < confidanceReduceOutput.size(); i++) {
+            System.out.println(confidanceReduceOutput.get(i));
+        }
     }
 
 
     public void Map1(){
-        MapOutput=new HashMap<ItemSet,Integer>();
+        supportMapOutput =new HashMap<ItemSet,Integer>();
 
         for (int i = 0; i < transactions.size(); i++) {
             String[] tr=transactions.get(i).items;
             for (int j = 0; j <tr.length ; j++) {
-                AddToMapWithCombine(new ItemSet(tr[j]));
+                AddToSupportMapWithCombine(new ItemSet(tr[j]));
             }
         }
     }
 
     public void Map2(HashMap<ItemSet,Integer> frequentItems){
-        MapOutput=new HashMap<ItemSet,Integer>();
+        supportMapOutput =new HashMap<ItemSet,Integer>();
 
         for (int i = 0; i < transactions.size(); i++) {
             ItemSet transac=transactions.get(i);
@@ -86,10 +102,10 @@ public class AprioriFlat {
                     if(!source.contains(transac.items[j])) {
                        ItemSet candidate = new ItemSet(source, transac.items[j]);
                        if(!transCands.contains(candidate)) {
-                           ArrayList<ItemSet> subSets = candidate.createSubsets();
+                           ArrayList<ItemSet> subSets = candidate.createKmin1Subsets();
                            if (frequentItems.keySet().containsAll(subSets)) { //checkWhetherSubsetsAreFrequent Will work?
                                if (candidate.IsThisSetAsubstOf(transac)) { //Candidate is in the sentence
-                                   AddToMapWithCombine(candidate);
+                                   AddToSupportMapWithCombine(candidate);
                                }
                            }
                            transCands.add(candidate);
@@ -100,30 +116,113 @@ public class AprioriFlat {
         }
     }
 
-    public void Reduce(){ //Nothing much to do here in this case because combiner has already done all the work
-        HashMap<ItemSet,Integer> reducerOutput=new HashMap<ItemSet,Integer>();
-        Iterator<ItemSet> itr=MapOutput.keySet().iterator();
-        while(itr.hasNext()) {
-            ItemSet source = itr.next();
-            int count=MapOutput.get(source);
-            if(count>threashold) {
-                reducerOutput.put(source, count);
-            }
-        }
 
-        reduceOutputs.add(reducerOutput);
-    }
 
-    private void AddToMapWithCombine(ItemSet candidate) {
-        Integer currentCandidateCount=MapOutput.get(candidate);
+
+
+    private void AddToSupportMapWithCombine(ItemSet candidate) {
+        Integer currentCandidateCount= supportMapOutput.get(candidate);
         if(currentCandidateCount==null) {
             currentCandidateCount=1;
         }
         else{
             currentCandidateCount++;
-            MapOutput.remove(candidate);
+            supportMapOutput.remove(candidate);
         }
-        MapOutput.put(candidate, currentCandidateCount);
+        supportMapOutput.put(candidate, currentCandidateCount);
+    }
+
+
+    public void Reduce1(){ //Nothing much to do here in this case because combiner has already done all the work
+        HashMap<ItemSet,Integer> reducerOutput=new HashMap<ItemSet,Integer>();
+        Iterator<ItemSet> itr= supportMapOutput.keySet().iterator();
+        while(itr.hasNext()) {
+            ItemSet source = itr.next();
+            int count= supportMapOutput.get(source);
+            if(count> supportThreashold) {
+                reducerOutput.put(source, count);
+            }
+        }
+
+        supportReduceOutputs.add(reducerOutput);
+    }
+
+
+
+
+    public void Map3(){
+        for (int i = 0; i < supportReduceOutputs.size(); i++) {
+            HashMap<ItemSet,Integer> reduGeneration= supportReduceOutputs.get(i);
+            Iterator<ItemSet> itr=reduGeneration.keySet().iterator();
+            while(itr.hasNext()) {
+                ItemSet source = itr.next();
+                ArrayList<ItemSet> subsets=  source.createSubsets();
+                for (int j = 0; j < subsets.size(); j++) {
+                    addToConfidanceMapWithCombine(source,reduGeneration.get(source),subsets.get(j));
+                }
+            }
+        }
+    }
+
+    public void Reduce2() {
+        Iterator<ItemSet> itr=confidanceMapOutput.keySet().iterator();
+        while(itr.hasNext()) {
+            ItemSet subset = itr.next();
+           // System.out.println(subset);
+
+            HashMap<ItemSet,Integer> superSets=confidanceMapOutput.get(subset);
+            Integer denominator=superSets.get(subset);
+
+
+            Iterator<ItemSet> itr1=superSets.keySet().iterator();
+            while(itr1.hasNext()) {
+                ItemSet superSet = itr1.next();
+                if(!superSet.equals(subset)) {
+                    Integer numerator=superSets.get(superSet);
+                    double confidence=((double)(numerator*100))/denominator;
+                    if(confidence>=confidanceThresholdPer){
+                        confidanceReduceOutput.add(new Rule(subset,superSet.getSetDifference(subset),confidence));
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void addToConfidanceMapWithCombine(ItemSet source,Integer sourceVal,ItemSet subset){
+        HashMap<ItemSet,Integer> sources=confidanceMapOutput.get(subset);
+        if(sources==null){
+            sources=new HashMap<ItemSet,Integer>();
+        }
+        else{
+            confidanceMapOutput.remove(subset);
+        }
+        sources.remove(source); //Logically impossible to happen in this case. But leaving here for thread safety.
+            sources.put(source,sourceVal);
+        confidanceMapOutput.put(subset,sources);
+    }
+
+
+    public class Rule{
+        ItemSet p,q;
+        double confidence =0;
+
+        public Rule(ItemSet p, ItemSet q, double confidence) {
+            this.p = p;
+            this.q = q;
+            this.confidence = confidence;
+        }
+
+        public String toString(){
+            StringBuilder sb=new StringBuilder();
+            sb.append(p);
+            sb.append(" => ");
+            sb.append(q);
+            sb.append(" : ");
+            sb.append(confidence);
+            sb.append("%");
+            return sb.toString();
+        }
     }
 
 
@@ -143,6 +242,13 @@ public class AprioriFlat {
             this.items = items;
         }
 
+        public ItemSet(ArrayList<String> itemsL) {
+           items =new String[itemsL.size()];
+            for (int i = 0; i <itemsL.size() ; i++) {
+                items[i]=itemsL.get(i);
+            }
+        }
+
         //Create k+1 generation itemset with the given k generation itemset by adding the new item
         public ItemSet(ItemSet i,String newItem) {
             this(i.items,newItem);
@@ -160,7 +266,22 @@ public class AprioriFlat {
            Arrays.sort(items);
         }
 
-
+        public ItemSet getSetDifference(ItemSet b){
+            ArrayList<String> passed=new ArrayList<String>();
+            for (int i = 0; i <items.length ; i++) {
+                boolean pass=true;
+                for (int j = 0; j < b.items.length; j++) {
+                    if(items[i].equalsIgnoreCase(b.items[j])){
+                        pass=false;
+                        break;
+                    }
+                }
+                if(pass){
+                    passed.add(items[i]);
+                }
+            }
+            return new ItemSet(passed);
+        }
 
         public boolean contains(String s){
             for (int j = 0; j <items.length ; j++) {
@@ -184,8 +305,31 @@ public class AprioriFlat {
         }
 
 
-        public ArrayList<ItemSet> createSubsets(){
+        public ArrayList<ItemSet> createSubsets() {
+            ArrayList<ItemSet> subsets = new ArrayList<ItemSet>();
+
+            ArrayList<ItemSet> toGenSubsets = new ArrayList<ItemSet>();
+            toGenSubsets.add(this);
+            while (!toGenSubsets.isEmpty()) {
+                ItemSet candidate = toGenSubsets.get(0);
+                toGenSubsets.remove(0);
+                ArrayList<ItemSet> kminSubs = candidate.createKmin1Subsets();
+                toGenSubsets.addAll(kminSubs);
+                subsets.add(candidate);
+            }
+            return subsets;
+        }
+
+
+        /**
+         * Create the subsets of genration K-1
+         * @return
+         */
+        public ArrayList<ItemSet> createKmin1Subsets(){
             ArrayList<ItemSet> subsets=new ArrayList<ItemSet>();
+            if(items.length==1){ //Do not make empty itemsets
+                return subsets;
+            }
             for (int i = 0; i <items.length; i++) {
                 subsets.add(new ItemSet(this,i));
             }
