@@ -8,13 +8,40 @@ public class AprioriFlat {
 
     HashMap<ItemSet,Integer> MapOutput=new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> reduceOutputs=new ArrayList<HashMap<ItemSet,Integer>>();
+    double thresholdPer=2.0;
+    int threashold=0;
 
 
 
     public static void main(String[] args) {
 	// write your code here
+        AprioriFlat af=new AprioriFlat();
+    }
 
 
+    public AprioriFlat() {
+        threashold=(int)(thresholdPer*transactions.size());
+        Map1();
+        Reduce();
+        HashMap<ItemSet,Integer> newFrequentItems=reduceOutputs.get(reduceOutputs.size()-1);
+        while(newFrequentItems.size()!=0){
+            Map2(newFrequentItems);
+            Reduce();
+            newFrequentItems=reduceOutputs.get(reduceOutputs.size()-1);
+        }
+    }
+
+    public void print(){
+        for (int i = 0; i < reduceOutputs.size(); i++) {
+            System.out.print("Generation "+i);
+            HashMap<ItemSet,Integer> output=reduceOutputs.get(i);
+            Iterator<ItemSet> itr=output.keySet().iterator();
+            while(itr.hasNext()) {
+                ItemSet is = itr.next();
+                System.out.println(is.toString() + " " + output.get(is));
+            }
+            System.out.print("\n");
+        }
     }
 
 
@@ -50,6 +77,19 @@ public class AprioriFlat {
                 }
             }
         }
+    }
+
+    public void Reduce(){ //Nothing much to do here in this case because combiner has already done all the work
+        HashMap<ItemSet,Integer> reducerOutput=new HashMap<ItemSet,Integer>();
+        Iterator<ItemSet> itr=MapOutput.keySet().iterator();
+        while(itr.hasNext()) {
+            ItemSet source = itr.next();
+            int count=MapOutput.get(source);
+            if(count>threashold) {
+                reducerOutput.put(source, count);
+            }
+        }
+        reduceOutputs.add(reducerOutput);
     }
 
     private void AddToMapWithCombine(ItemSet candidate) {
@@ -152,6 +192,19 @@ public class AprioriFlat {
             return true;
         }
 
+
+        public String toString(){
+            StringBuilder sb=new StringBuilder();
+            sb.append("[");
+            for (int i = 0; i <items.length; i++) {
+                sb.append(items[i]);
+                if(i!=items.length-1){
+                    sb.append(",");
+                }
+            }
+            sb.append("]");
+            return sb.toString();
+        }
     }
 
 
