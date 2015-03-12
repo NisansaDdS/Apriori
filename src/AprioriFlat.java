@@ -1,22 +1,23 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class AprioriFlat {
+public class AprioriFlat implements Serializable  {
 
     ArrayList<ItemSet> transactions=new ArrayList<ItemSet>();
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =66.0;
+    double supportThresholdPer =5.0;
     int supportThreashold =0;
 
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
     ArrayList<Rule> confidanceReduceOutput2=new ArrayList<Rule>();
-    double confidanceThresholdPer =50.0;
+    double confidanceThresholdPer =20.0;
 
 
     public static void main(String[] args) {
@@ -27,18 +28,22 @@ public class AprioriFlat {
 
     public AprioriFlat() {
 
-        loadTransactions();
+     /*  loadTransactions();
         supportThreashold =(int)((supportThresholdPer *transactions.size())/100);
         Map1();
         Reduce1();
         HashMap<ItemSet,Integer> newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
+        int i=1;
         while(newFrequentItems.size()!=0){
+            System.out.println("Running loop "+i);
             Map2(newFrequentItems);
             Reduce1();
             newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
+            i++;
         }
+       // Serialize();
 
-
+       // deSerialize();
         Map3();
         Reduce2();
         Map4();
@@ -47,16 +52,79 @@ public class AprioriFlat {
         print();
     }
 
+
+
+    public void Serialize(){
+        FileOutputStream fos = null;
+        ObjectOutputStream out = null;
+        try {
+            fos = new FileOutputStream("Backup.dat");
+            out = new ObjectOutputStream(fos);
+            out.writeObject(supportReduceOutputs);
+
+            out.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void deSerialize(){
+        FileInputStream fis = null;
+        ObjectInputStream in = null;
+        try {
+            fis = new FileInputStream("Backup.dat");
+            in = new ObjectInputStream(fis);
+            supportReduceOutputs = (ArrayList<HashMap<ItemSet,Integer>>)in.readObject();
+            in.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void loadTransactions(){
-        transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
+       String[][] data=readFile("./Data/D01.csv");
+        for (int i = 0; i < data.length; i++) {
+            transactions.add(new ItemSet(data[i]));
+        }
+
+      /*  transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
         transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
         transactions.add(new ItemSet(new String[]{"A","U","O","F","W","D"}));
         transactions.add(new ItemSet(new String[]{"O","A","B","C","F","X"}));
         transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
-        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));
-       // transactions.add(new ItemSet(new String[]{"B","A","U","O","C","Z"}));
-       // transactions.add(new ItemSet(new String[]{"F","A","X","F","E","W"}));
+        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));*/
+
     }
+
+
+    public String[][] readFile(String filename) {
+        String[][] data=new String[0][0];
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            String line = br.readLine();
+            String[] titles=line.split(";");//dt;ID;Age;RA;PS;PID;Am;As;SP -> //date and time;Customer ID;Age;Residence Area;Product subclass;Product ID;Amount;Asset;Sales price
+            ArrayList<String[]> dataLines=new ArrayList<String[]>();
+            while (line != null) {
+                String[] lineParts=line.split(";");
+                for (int i = 0; i <lineParts.length ; i++) {
+                    lineParts[i]=titles[i]+"_"+lineParts[i].trim();
+                }
+                dataLines.add(lineParts);
+                line = br.readLine();
+            }
+
+            data=new String[dataLines.size()][];
+            for (int i = 0; i <dataLines.size() ; i++) {
+                data[i]=dataLines.get(i);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+
 
 
     public void print(){
@@ -106,7 +174,7 @@ public class AprioriFlat {
                        ItemSet candidate = new ItemSet(source, transac.items[j]);
                        if(!transCands.contains(candidate)) {
                            ArrayList<ItemSet> subSets = candidate.createKmin1Subsets();
-                           if (frequentItems.keySet().containsAll(subSets)) { //checkWhetherSubsetsAreFrequent Will work?
+                           if (frequentItems.keySet().containsAll(subSets)) {
                                if (candidate.IsThisSetAsubstOf(transac)) { //Candidate is in the sentence
                                    AddToSupportMapWithCombine(candidate);
                                }
@@ -253,7 +321,7 @@ public class AprioriFlat {
     }
 
 
-    public class Rule{
+    public class Rule implements Serializable {
         ItemSet p,q;
         double confidence =0;
 
@@ -276,7 +344,7 @@ public class AprioriFlat {
     }
 
 
-    public class ItemSet{
+    public class ItemSet implements Serializable {
         String[] items;
 
         //Create itemset with a single given strings
