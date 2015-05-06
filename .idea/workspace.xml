@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="349bb93c-9169-4798-9955-1aa21bb379c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AprioriFlat.java" afterPath="$PROJECT_DIR$/src/AprioriFlat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Data/D01.csv" afterPath="$PROJECT_DIR$/Data/D01.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Data/D02.csv" afterPath="$PROJECT_DIR$/Data/D02.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Data/D11.csv" afterPath="$PROJECT_DIR$/Data/D11.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Data/D12.csv" afterPath="$PROJECT_DIR$/Data/D12.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Apriori.iws" />
@@ -38,30 +34,30 @@
       <file leaf-file-name="AprioriFlat.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.76598835" vertical-offset="153" max-vertical-offset="8738">
-              <caret line="40" column="46" selection-start-line="40" selection-start-column="46" selection-end-line="40" selection-end-column="46" />
+            <state vertical-scroll-proportion="-34.42236" vertical-offset="6018" max-vertical-offset="9129">
+              <caret line="28" column="25" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#227#236#0" expanded="true" />
-                <element signature="e#299#316#0" expanded="true" />
-                <element signature="e#395#421#0" expanded="true" />
-                <element signature="e#572#606#0" expanded="true" />
-                <element signature="e#690#723#0" expanded="true" />
-                <element signature="e#784#790#0" expanded="true" />
-                <element signature="e#3600#3610#0" expanded="true" />
-                <element signature="e#5605#5614#0" expanded="true" />
-                <element signature="e#7182#7199#0" expanded="true" />
-                <element signature="e#9874#9883#0" expanded="true" />
-                <element signature="e#12064#12065#0" expanded="true" />
-                <element signature="e#12112#12113#0" expanded="true" />
-                <element signature="e#12247#12248#0" expanded="true" />
-                <element signature="e#12289#12290#0" expanded="true" />
-                <element signature="e#12655#12656#0" expanded="true" />
-                <element signature="e#12700#12701#0" expanded="true" />
-                <element signature="e#13153#13161#0" expanded="true" />
-                <element signature="e#14362#14371#0" expanded="true" />
-                <element signature="e#14435#14444#0" expanded="true" />
-                <element signature="e#15044#15053#0" expanded="true" />
+                <element signature="e#141#150#0" expanded="true" />
+                <element signature="e#213#230#0" expanded="true" />
+                <element signature="e#486#520#0" expanded="true" />
+                <element signature="e#604#637#0" expanded="true" />
+                <element signature="e#698#704#0" expanded="true" />
+                <element signature="e#3551#3561#0" expanded="true" />
+                <element signature="e#3705#3713#0" expanded="true" />
+                <element signature="e#6025#6034#0" expanded="true" />
+                <element signature="e#7602#7619#0" expanded="true" />
+                <element signature="e#10294#10303#0" expanded="true" />
+                <element signature="e#12782#12783#0" expanded="true" />
+                <element signature="e#12830#12831#0" expanded="true" />
+                <element signature="e#12965#12966#0" expanded="true" />
+                <element signature="e#13007#13008#0" expanded="true" />
+                <element signature="e#13373#13374#0" expanded="true" />
+                <element signature="e#13418#13419#0" expanded="true" />
+                <element signature="e#13871#13879#0" expanded="true" />
+                <element signature="e#15080#15089#0" expanded="true" />
+                <element signature="e#15153#15162#0" expanded="true" />
+                <element signature="e#15762#15771#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,10 +76,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1358" />
-    <option name="y" value="-908" />
-    <option name="width" value="1616" />
-    <option name="height" value="1216" />
+    <option name="x" value="1592" />
+    <option name="y" value="124" />
+    <option name="width" value="1382" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -108,6 +104,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -142,8 +140,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -160,12 +156,13 @@
     <property name="dynamic.classpath" value="false" />
     <property name="FullScreen" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="AprioriFlat" />
-      <option name="VM_PARAMETERS" value="-Xms1024m" />
+      <option name="VM_PARAMETERS" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -330,8 +327,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1358" y="-908" width="1616" height="1216" extended-state="6" />
-    <editor active="true" />
+    <frame x="1592" y="124" width="1382" height="784" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -343,11 +340,10 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3281106" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6906585" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21208227" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -355,8 +351,9 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -387,60 +384,120 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7582">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8636">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#227#236#0" expanded="true" />
-            <element signature="e#299#316#0" expanded="true" />
-            <element signature="e#395#421#0" expanded="true" />
-            <element signature="e#572#606#0" expanded="true" />
-            <element signature="e#690#723#0" expanded="true" />
-            <element signature="e#784#790#0" expanded="true" />
-            <element signature="e#3600#3610#0" expanded="true" />
-            <element signature="e#5605#5614#0" expanded="true" />
-            <element signature="e#7182#7199#0" expanded="true" />
-            <element signature="e#9874#9883#0" expanded="true" />
-            <element signature="e#12064#12065#0" expanded="true" />
-            <element signature="e#12112#12113#0" expanded="true" />
-            <element signature="e#12247#12248#0" expanded="true" />
-            <element signature="e#12289#12290#0" expanded="true" />
-            <element signature="e#12655#12656#0" expanded="true" />
-            <element signature="e#12700#12701#0" expanded="true" />
-            <element signature="e#13153#13161#0" expanded="true" />
-            <element signature="e#14362#14371#0" expanded="true" />
-            <element signature="e#14435#14444#0" expanded="true" />
-            <element signature="e#15044#15053#0" expanded="true" />
+            <element signature="e#141#150#0" expanded="true" />
+            <element signature="e#213#230#0" expanded="true" />
+            <element signature="e#486#520#0" expanded="true" />
+            <element signature="e#604#637#0" expanded="true" />
+            <element signature="e#698#704#0" expanded="true" />
+            <element signature="e#3551#3561#0" expanded="true" />
+            <element signature="e#3705#3713#0" expanded="true" />
+            <element signature="e#6025#6034#0" expanded="true" />
+            <element signature="e#7602#7619#0" expanded="true" />
+            <element signature="e#10294#10303#0" expanded="true" />
+            <element signature="e#12782#12783#0" expanded="true" />
+            <element signature="e#12830#12831#0" expanded="true" />
+            <element signature="e#12965#12966#0" expanded="true" />
+            <element signature="e#13007#13008#0" expanded="true" />
+            <element signature="e#13373#13374#0" expanded="true" />
+            <element signature="e#13418#13419#0" expanded="true" />
+            <element signature="e#13871#13879#0" expanded="true" />
+            <element signature="e#15080#15089#0" expanded="true" />
+            <element signature="e#15153#15162#0" expanded="true" />
+            <element signature="e#15762#15771#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.76598835" vertical-offset="153" max-vertical-offset="8738">
-          <caret line="40" column="46" selection-start-line="40" selection-start-column="46" selection-end-line="40" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="8738">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#227#236#0" expanded="true" />
-            <element signature="e#299#316#0" expanded="true" />
-            <element signature="e#395#421#0" expanded="true" />
-            <element signature="e#572#606#0" expanded="true" />
-            <element signature="e#690#723#0" expanded="true" />
-            <element signature="e#784#790#0" expanded="true" />
-            <element signature="e#3600#3610#0" expanded="true" />
-            <element signature="e#5605#5614#0" expanded="true" />
-            <element signature="e#7182#7199#0" expanded="true" />
-            <element signature="e#9874#9883#0" expanded="true" />
-            <element signature="e#12064#12065#0" expanded="true" />
-            <element signature="e#12112#12113#0" expanded="true" />
-            <element signature="e#12247#12248#0" expanded="true" />
-            <element signature="e#12289#12290#0" expanded="true" />
-            <element signature="e#12655#12656#0" expanded="true" />
-            <element signature="e#12700#12701#0" expanded="true" />
-            <element signature="e#13153#13161#0" expanded="true" />
-            <element signature="e#14362#14371#0" expanded="true" />
-            <element signature="e#14435#14444#0" expanded="true" />
-            <element signature="e#15044#15053#0" expanded="true" />
+            <element signature="e#141#150#0" expanded="true" />
+            <element signature="e#213#230#0" expanded="true" />
+            <element signature="e#486#520#0" expanded="true" />
+            <element signature="e#604#637#0" expanded="true" />
+            <element signature="e#698#704#0" expanded="true" />
+            <element signature="e#3551#3561#0" expanded="true" />
+            <element signature="e#3705#3713#0" expanded="true" />
+            <element signature="e#6025#6034#0" expanded="true" />
+            <element signature="e#7602#7619#0" expanded="true" />
+            <element signature="e#10294#10303#0" expanded="true" />
+            <element signature="e#12782#12783#0" expanded="true" />
+            <element signature="e#12830#12831#0" expanded="true" />
+            <element signature="e#12965#12966#0" expanded="true" />
+            <element signature="e#13007#13008#0" expanded="true" />
+            <element signature="e#13373#13374#0" expanded="true" />
+            <element signature="e#13418#13419#0" expanded="true" />
+            <element signature="e#13871#13879#0" expanded="true" />
+            <element signature="e#15080#15089#0" expanded="true" />
+            <element signature="e#15153#15162#0" expanded="true" />
+            <element signature="e#15762#15771#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7582">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#141#150#0" expanded="true" />
+            <element signature="e#213#230#0" expanded="true" />
+            <element signature="e#486#520#0" expanded="true" />
+            <element signature="e#604#637#0" expanded="true" />
+            <element signature="e#698#704#0" expanded="true" />
+            <element signature="e#3551#3561#0" expanded="true" />
+            <element signature="e#3705#3713#0" expanded="true" />
+            <element signature="e#6025#6034#0" expanded="true" />
+            <element signature="e#7602#7619#0" expanded="true" />
+            <element signature="e#10294#10303#0" expanded="true" />
+            <element signature="e#12782#12783#0" expanded="true" />
+            <element signature="e#12830#12831#0" expanded="true" />
+            <element signature="e#12965#12966#0" expanded="true" />
+            <element signature="e#13007#13008#0" expanded="true" />
+            <element signature="e#13373#13374#0" expanded="true" />
+            <element signature="e#13418#13419#0" expanded="true" />
+            <element signature="e#13871#13879#0" expanded="true" />
+            <element signature="e#15080#15089#0" expanded="true" />
+            <element signature="e#15153#15162#0" expanded="true" />
+            <element signature="e#15762#15771#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AprioriFlat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-34.42236" vertical-offset="6018" max-vertical-offset="9129">
+          <caret line="28" column="25" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#141#150#0" expanded="true" />
+            <element signature="e#213#230#0" expanded="true" />
+            <element signature="e#486#520#0" expanded="true" />
+            <element signature="e#604#637#0" expanded="true" />
+            <element signature="e#698#704#0" expanded="true" />
+            <element signature="e#3551#3561#0" expanded="true" />
+            <element signature="e#3705#3713#0" expanded="true" />
+            <element signature="e#6025#6034#0" expanded="true" />
+            <element signature="e#7602#7619#0" expanded="true" />
+            <element signature="e#10294#10303#0" expanded="true" />
+            <element signature="e#12782#12783#0" expanded="true" />
+            <element signature="e#12830#12831#0" expanded="true" />
+            <element signature="e#12965#12966#0" expanded="true" />
+            <element signature="e#13007#13008#0" expanded="true" />
+            <element signature="e#13373#13374#0" expanded="true" />
+            <element signature="e#13418#13419#0" expanded="true" />
+            <element signature="e#13871#13879#0" expanded="true" />
+            <element signature="e#15080#15089#0" expanded="true" />
+            <element signature="e#15153#15162#0" expanded="true" />
+            <element signature="e#15762#15771#0" expanded="true" />
           </folding>
         </state>
       </provider>

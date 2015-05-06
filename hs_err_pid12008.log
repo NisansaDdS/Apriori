@@ -1,0 +1,119 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1441792 bytes for offset table expansion
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (blockOffsetTable.cpp:79), pid=12008, tid=11220
+#
+# JRE version: 7.0_01-b08
+# Java VM: Java HotSpot(TM) Client VM (21.1-b02 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0173a400):  JavaThread "Unknown thread" [_thread_in_vm, id=11220, stack(0x01200000,0x01250000)]
+
+Stack: [0x01200000,0x01250000],  sp=0x0124f7e8,  free space=317k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x1630e1]
+V  [jvm.dll+0x15ddbc]
+V  [jvm.dll+0x5b370]
+V  [jvm.dll+0x5b8f3]
+V  [jvm.dll+0x68c46]
+V  [jvm.dll+0x70053]
+V  [jvm.dll+0x69285]
+V  [jvm.dll+0x67d13]
+V  [jvm.dll+0x71d90]
+V  [jvm.dll+0x121a3f]
+V  [jvm.dll+0x14382a]
+V  [jvm.dll+0xa2940]
+C  [java.exe+0x1347]
+C  [java.exe+0x1db7]
+C  [java.exe+0xa0ab]
+C  [java.exe+0xa135]
+C  [kernel32.dll+0x51114]  BaseThreadInitThunk+0x12
+C  [ntdll.dll+0x5b429]  RtlInitializeExceptionChain+0x63
+C  [ntdll.dll+0x5b3fc]  RtlInitializeExceptionChain+0x36
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0173a400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=11220, stack(0x01200000,0x01250000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Dynamic libraries:
+0x000e0000 - 0x0010e000 	C:\Program Files\Java\jdk1.7.0_01\bin\java.exe
+0x77670000 - 0x777ad000 	C:\Windows\SYSTEM32\ntdll.dll
+0x774a0000 - 0x77574000 	C:\Windows\system32\kernel32.dll
+0x75a20000 - 0x75a6a000 	C:\Windows\system32\KERNELBASE.dll
+0x77090000 - 0x77130000 	C:\Windows\system32\ADVAPI32.dll
+0x767e0000 - 0x7688c000 	C:\Windows\system32\msvcrt.dll
+0x76e70000 - 0x76e89000 	C:\Windows\SYSTEM32\sechost.dll
+0x777e0000 - 0x77881000 	C:\Windows\system32\RPCRT4.dll
+0x76d20000 - 0x76de9000 	C:\Windows\system32\USER32.dll
+0x77620000 - 0x7766e000 	C:\Windows\system32\GDI32.dll
+0x76970000 - 0x7697a000 	C:\Windows\system32\LPK.dll
+0x77580000 - 0x7761d000 	C:\Windows\system32\USP10.dll
+0x743d0000 - 0x7456e000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7600.16661_none_420fe3fa2b8113bd\COMCTL32.dll
+0x76cc0000 - 0x76d17000 	C:\Windows\system32\SHLWAPI.dll
+0x777b0000 - 0x777cf000 	C:\Windows\system32\IMM32.DLL
+0x75ac0000 - 0x75b8c000 	C:\Windows\system32\MSCTF.dll
+0x75780000 - 0x757b3000 	C:\Windows\system32\nvinit.dll
+0x63650000 - 0x6370e000 	C:\Program Files\Java\jdk1.7.0_01\jre\bin\msvcr100.dll
+0x56f50000 - 0x57271000 	C:\Program Files\Java\jdk1.7.0_01\jre\bin\client\jvm.dll
+0x727f0000 - 0x727f7000 	C:\Windows\system32\WSOCK32.dll
+0x76930000 - 0x76965000 	C:\Windows\system32\WS2_32.dll
+0x76920000 - 0x76926000 	C:\Windows\system32\NSI.dll
+0x73e70000 - 0x73ea2000 	C:\Windows\system32\WINMM.dll
+0x77890000 - 0x77895000 	C:\Windows\system32\PSAPI.DLL
+0x6b790000 - 0x6b79c000 	C:\Program Files\Java\jdk1.7.0_01\jre\bin\verify.dll
+0x6b6b0000 - 0x6b6d0000 	C:\Program Files\Java\jdk1.7.0_01\jre\bin\java.dll
+0x69ad0000 - 0x69ae3000 	C:\Program Files\Java\jdk1.7.0_01\jre\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Xms1024m -Didea.launcher.port=7532 -Didea.launcher.bin.path=D:\Program Files\JetBrains\IntelliJ IDEA Community Edition 14.0.2\bin -Dfile.encoding=UTF-8 
+java_command: com.intellij.rt.execution.application.AppMain AprioriFlat
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0_01
+PATH=C:\Program Files\PC Connectivity Solution\;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Program Files\NVIDIA Corporation\PhysX\Common;C:\Program Files\Broadcom\Broadcom 802.11 Network Adapter\Driver;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Common Files\Adobe\AGL;C:\Program Files\Windows Live\Shared;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\Programs\TortoiseSVN\bin;C:\Program Files\Microsoft SQL Server\90\Tools\binn\;D:\Programs\Graphviz 2.28\bin;D:\Programs\Calibre\;D:\Programs\NodeJS\;C:\Program Files\Skype\Phone\;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\Nisansa\AppData\Roaming\npm;D:\Programs\Python;C:\Program Files\Java\jdk1.7.0_01\bin;D:\Programs;D:\Dropbox\Academic - Study - UO\2015_03_Spring\Compiler\Scanner\tools\jflex-1.4.3\bin
+USERNAME=Nisansa
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7600 
+
+CPU:total 8 (4 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+Memory: 4k page, physical 3254620k(169328k free), swap 8445248k(1095012k free)
+
+vm_info: Java HotSpot(TM) Client VM (21.1-b02) for windows-x86 JRE (1.7.0_01-b08), built on Oct  3 2011 02:11:36 by "java_re" with unknown MS VC++:1600
+
+time: Wed May 06 00:21:14 2015
+elapsed time: 1 seconds
+

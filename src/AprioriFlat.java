@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class AprioriFlat implements Serializable  {
 
@@ -10,7 +7,7 @@ public class AprioriFlat implements Serializable  {
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =5.0;
+    double supportThresholdPer =0.8;
     int supportThreashold =0;
 
 
@@ -28,7 +25,7 @@ public class AprioriFlat implements Serializable  {
 
     public AprioriFlat() {
 
-     /*  loadTransactions();
+       loadTransactions();
         supportThreashold =(int)((supportThresholdPer *transactions.size())/100);
         Map1();
         Reduce1();
@@ -82,17 +79,17 @@ public class AprioriFlat implements Serializable  {
     }
 
     public void loadTransactions(){
-       String[][] data=readFile("./Data/D01.csv");
+      String[][] data=readFile("./Data/FoodMart.csv");
         for (int i = 0; i < data.length; i++) {
             transactions.add(new ItemSet(data[i]));
         }
 
-      /*  transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
+     /*   transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
         transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
         transactions.add(new ItemSet(new String[]{"A","U","O","F","W","D"}));
         transactions.add(new ItemSet(new String[]{"O","A","B","C","F","X"}));
         transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
-        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));*/
+        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"})); */
 
     }
 
@@ -102,12 +99,22 @@ public class AprioriFlat implements Serializable  {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filename));
             String line = br.readLine();
-            String[] titles=line.split(";");//dt;ID;Age;RA;PS;PID;Am;As;SP -> //date and time;Customer ID;Age;Residence Area;Product subclass;Product ID;Amount;Asset;Sales price
+            String[] titles=line.split(",");//dt;ID;Age;RA;PS;PID;Am;As;SP -> //date and time;Customer ID;Age;Residence Area;Product subclass;Product ID;Amount;Asset;Sales price
+            line = br.readLine();
             ArrayList<String[]> dataLines=new ArrayList<String[]>();
             while (line != null) {
-                String[] lineParts=line.split(";");
+                String[] lineParts=line.split(",");
+                ArrayList<String> items=new ArrayList<String>();
                 for (int i = 0; i <lineParts.length ; i++) {
-                    lineParts[i]=titles[i]+"_"+lineParts[i].trim();
+                    int isBought=Integer.parseInt(lineParts[i].trim());
+                    if(isBought==1){
+                        items.add(titles[i]);
+                    }
+                   // lineParts[i]=titles[i]+"_"+lineParts[i].trim();
+                }
+                lineParts=new String[items.size()];
+                for (int i = 0; i <items.size() ; i++) {
+                    lineParts[i]=items.get(i);
                 }
                 dataLines.add(lineParts);
                 line = br.readLine();
@@ -142,6 +149,7 @@ public class AprioriFlat implements Serializable  {
             System.out.print("\n");
         }
         System.out.println("Rules\n");
+        Collections.sort(confidanceReduceOutput2);
         for (int i = 0; i < confidanceReduceOutput2.size(); i++) {
             System.out.println(confidanceReduceOutput2.get(i));
         }
@@ -294,7 +302,7 @@ public class AprioriFlat implements Serializable  {
 
             //Remove supersets
             for (int i = 0; i <superSets.size() ; i++) {
-                Ps.remove(superSets.get(i));
+            Ps.remove(superSets.get(i));
             }
 
             //Create rules
@@ -321,8 +329,11 @@ public class AprioriFlat implements Serializable  {
     }
 
 
-    public class Rule implements Serializable {
+    public class Rule implements Serializable,Comparable {
         ItemSet p,q;
+
+
+
         double confidence =0;
 
         public Rule(ItemSet p, ItemSet q, double confidence) {
@@ -340,6 +351,18 @@ public class AprioriFlat implements Serializable  {
             sb.append(confidence);
             sb.append("%");
             return sb.toString();
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            Rule r=(Rule)o;
+            if(confidence>r.confidence){
+                return -1;
+            }
+            else if(confidence<r.confidence){
+                return 1;
+            }
+            return 0;
         }
     }
 
