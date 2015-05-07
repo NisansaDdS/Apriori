@@ -8,18 +8,47 @@ public class AprioriFlat implements Serializable  {
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,Integer> supportReduceOutputsLastGen =new HashMap<ItemSet,Integer>();
-    double supportThresholdPer =0.8;//1;
+    double supportThresholdPer =60;//1;
     int supportThreashold =0;
     boolean findNegativePatterns=false;
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
     ArrayList<Rule> confidanceReduceOutput2=new ArrayList<Rule>();
-    double confidanceThresholdPer =20;
+    double confidanceThresholdPer =75;
+    static boolean test1=false;
+    static boolean test2=false;
+
 
 
     public static void main(String[] args) {
 	// write your code here
+        if(args.length!=1){
+            test1=false;
+            test2=false;
+        }
+        else{
+            try {
+                int num = Integer.valueOf(args[0]);
+                if(num==1){
+                    test1=true;
+                    test2=false;
+                }
+                else if(num==2){
+                    test1=false;
+                    test2=true;
+                }
+                else{
+                    test1=false;
+                    test2=false;
+                }
+            }
+            catch(Exception e){
+                test1=false;
+                test2=false;
+            }
+        }
+
         AprioriFlat af=new AprioriFlat();
     }
 
@@ -82,23 +111,26 @@ public class AprioriFlat implements Serializable  {
         }
     }
 
-    public void loadTransactions(){
-     String[][] data=readFile("./Data/FoodMart.csv");
-        for (int i = 0; i < data.length; i++) {
-            transactions.add(new ItemSet(data[i]));
+    public void loadTransactions() {
+
+        if (test1) {
+            transactions.add(new ItemSet(new String[]{"A", "B", "C", "D", "E", "F"}));
+            transactions.add(new ItemSet(new String[]{"B", "H", "S", "C", "F", "T"}));
+            transactions.add(new ItemSet(new String[]{"A", "U", "O", "F", "W", "D"}));
+            transactions.add(new ItemSet(new String[]{"O", "A", "E", "C", "F", "X"}));
+            transactions.add(new ItemSet(new String[]{"G", "A", "C", "D", "E", "F"}));
+        } else if (test2) {
+            transactions.add(new ItemSet(new String[]{"J", "B", "C", "D", "E", "F"}));
+            transactions.add(new ItemSet(new String[]{"B", "H", "S", "C", "F", "T"}));
+            transactions.add(new ItemSet(new String[]{"J", "U", "F", "W", "D"}));
+            transactions.add(new ItemSet(new String[]{"J", "E", "C", "F", "X"}));
+            transactions.add(new ItemSet(new String[]{"G", "J", "C", "D", "E", "F"}));
+        } else {
+            String[][] data = readFile("./Data/FoodMart.csv");
+            for (int i = 0; i < data.length; i++) {
+                transactions.add(new ItemSet(data[i]));
+            }
         }
-
- /*      transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
-        transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
-        transactions.add(new ItemSet(new String[]{"A","U","O","F","W","D"}));
-        transactions.add(new ItemSet(new String[]{"O","A","E","C","F","X"}));
-        transactions.add(new ItemSet(new String[]{"G","A","C","D","E","F"}));*/
-
-   /*    transactions.add(new ItemSet(new String[]{"J","B","C","D","E","F"}));
-        transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
-        transactions.add(new ItemSet(new String[]{"J","U","F","W","D"}));
-        transactions.add(new ItemSet(new String[]{"J","E","C","F","X"}));
-        transactions.add(new ItemSet(new String[]{"G","J","C","D","E","F"}));*/
 
     }
 
