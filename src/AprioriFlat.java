@@ -10,7 +10,7 @@ public class AprioriFlat implements Serializable  {
     HashMap<ItemSet,Integer> supportReduceOutputsLastGen =new HashMap<ItemSet,Integer>();
     double supportThresholdPer =0.8;//1;
     int supportThreashold =0;
-
+    boolean findNegativePatterns=false;
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
@@ -116,13 +116,20 @@ public class AprioriFlat implements Serializable  {
                 ArrayList<String> items=new ArrayList<String>();
                 for (int i = 0; i <lineParts.length ; i++) {
                     int isBought=Integer.parseInt(lineParts[i].trim());
-                    if(isBought==1){
-                        items.add(titles[i]+"_T");
+
+                    if(findNegativePatterns) {
+                        if (isBought == 1) {
+                            items.add(titles[i] + "_T");
+                        } else {
+                            items.add(titles[i] + "_F");
+                        }
                     }
                     else{
-                        items.add(titles[i]+"_F");
+                        if (isBought == 1) {
+                            items.add(titles[i]);
+                        }
                     }
-                   // lineParts[i]=titles[i]+"_"+lineParts[i].trim();
+
                 }
                 lineParts=new String[items.size()];
                 for (int i = 0; i <items.size() ; i++) {
