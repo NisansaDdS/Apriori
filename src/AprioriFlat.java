@@ -7,14 +7,14 @@ public class AprioriFlat implements Serializable  {
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =0.8;
+    double supportThresholdPer =40;//1;
     int supportThreashold =0;
 
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
     ArrayList<Rule> confidanceReduceOutput2=new ArrayList<Rule>();
-    double confidanceThresholdPer =20.0;
+    double confidanceThresholdPer =50;
 
 
     public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class AprioriFlat implements Serializable  {
         int i=1;
         while(newFrequentItems.size()!=0){
             System.out.println("Running loop "+i);
-            Map2(newFrequentItems);
+            Map21(newFrequentItems);
             Reduce1();
             newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
             i++;
@@ -84,12 +84,12 @@ public class AprioriFlat implements Serializable  {
             transactions.add(new ItemSet(data[i]));
         }
 
-     /*   transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
+      /*  transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
         transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
         transactions.add(new ItemSet(new String[]{"A","U","O","F","W","D"}));
         transactions.add(new ItemSet(new String[]{"O","A","B","C","F","X"}));
         transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
-        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"})); */
+        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));*/
 
     }
 
@@ -108,7 +108,10 @@ public class AprioriFlat implements Serializable  {
                 for (int i = 0; i <lineParts.length ; i++) {
                     int isBought=Integer.parseInt(lineParts[i].trim());
                     if(isBought==1){
-                        items.add(titles[i]);
+                        items.add(titles[i]+"_T");
+                    }
+                    else{
+                        items.add(titles[i]+"_F");
                     }
                    // lineParts[i]=titles[i]+"_"+lineParts[i].trim();
                 }
@@ -167,28 +170,85 @@ public class AprioriFlat implements Serializable  {
         }
     }
 
+
+
+    public void Map21(HashMap<ItemSet,Integer> frequentItems) {
+        supportMapOutput = new HashMap<ItemSet, Integer>();
+        ArrayList<ItemSet> transCands=new ArrayList<ItemSet>();
+        Iterator<ItemSet> itr=frequentItems.keySet().iterator();
+        while(itr.hasNext()){
+            ItemSet source=itr.next();
+            Iterator<ItemSet> itr1=frequentItems.keySet().iterator();
+            while(itr1.hasNext()){
+                ItemSet source1=itr1.next();
+                ItemSet union=source.takeUnion(source1);
+                if(union!=null){
+                    if (!transCands.contains(union)) {
+                        transCands.add(union);
+                        ArrayList<ItemSet> subSets = union.createKmin1Subsets();
+                        if (frequentItems.keySet().containsAll(subSets)) {
+                            for (int i = 0; i < transactions.size(); i++) {
+                                ItemSet transac = transactions.get(i);
+                                if (union.IsThisSetAsubstOf(transac)) { //Candidate is in the sentence
+                                    AddToSupportMapWithCombine(union);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
     public void Map2(HashMap<ItemSet,Integer> frequentItems){
         supportMapOutput =new HashMap<ItemSet,Integer>();
 
         for (int i = 0; i < transactions.size(); i++) {
+            System.out.println((i+1)+"out of "+transactions.size()+" trans" );
             ItemSet transac=transactions.get(i);
             ArrayList<ItemSet> transCands=new ArrayList<ItemSet>();
 
             for (int j = 0; j < transac.items.length; j++) {
+              //  System.out.println("***********************************************");
+             //   System.out.println((j+1)+"out of "+transac.items.length+" trans items");
                 Iterator<ItemSet> itr=frequentItems.keySet().iterator();
+                int count=frequentItems.keySet().size();
+                int l=0;
                 while(itr.hasNext()){
+                //    System.out.println("."+(l+1)+"out of "+count+" freq items");
+                    l++;
                     ItemSet source=itr.next();
+                    Boolean pass=false;
+                    for (int k = 0; k <source.items.length ; k++) {
+                        if(source.items[k].endsWith("_T")){
+                            pass=true;
+                            break;
+                        }
+                    }
+
                     if(!source.contains(transac.items[j])) {
-                       ItemSet candidate = new ItemSet(source, transac.items[j]);
-                       if(!transCands.contains(candidate)) {
-                           ArrayList<ItemSet> subSets = candidate.createKmin1Subsets();
-                           if (frequentItems.keySet().containsAll(subSets)) {
-                               if (candidate.IsThisSetAsubstOf(transac)) { //Candidate is in the sentence
-                                   AddToSupportMapWithCombine(candidate);
-                               }
-                           }
-                           transCands.add(candidate);
-                       }
+                        if(!pass){
+                            if(transac.items[j].endsWith("_T")){
+                                pass=true;
+                            }
+                        }
+
+                      //  if(pass) {
+                            ItemSet candidate = new ItemSet(source, transac.items[j]);
+                            if (!transCands.contains(candidate)) {
+                                ArrayList<ItemSet> subSets = candidate.createKmin1Subsets();
+                                if (frequentItems.keySet().containsAll(subSets)) {
+                                    if (candidate.IsThisSetAsubstOf(transac)) { //Candidate is in the sentence
+                                        AddToSupportMapWithCombine(candidate);
+                                    }
+                                }
+                                transCands.add(candidate);
+                            }
+                     //   }
+
                     }
                 }
             }
@@ -389,6 +449,28 @@ public class AprioriFlat implements Serializable  {
                 items[i]=itemsL.get(i);
             }
         }
+
+        public ItemSet takeUnion(ItemSet is){
+            HashSet<String> allIitems=new HashSet<String>();
+            for (int i = 0; i <items.length ; i++) {
+                allIitems.add(items[i]);
+            }
+            for (int i = 0; i < is.items.length; i++) {
+                allIitems.add(is.items[i]);
+            }
+            if(allIitems.size()!=(items.length+1)){
+                return null;
+            }
+            String[] finItems=new String[allIitems.size()];
+            Iterator<String> itr=allIitems.iterator();
+            int i=0;
+            while(itr.hasNext()){
+                finItems[i]=itr.next();
+                i++;
+            }
+            return (new ItemSet(finItems));
+        }
+
 
         //Create k+1 generation itemset with the given k generation itemset by adding the new item
         public ItemSet(ItemSet i,String newItem) {
