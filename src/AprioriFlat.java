@@ -7,14 +7,15 @@ public class AprioriFlat implements Serializable  {
 
     HashMap<ItemSet,Integer> supportMapOutput =new HashMap<ItemSet,Integer>();
     ArrayList<HashMap<ItemSet,Integer>> supportReduceOutputs =new ArrayList<HashMap<ItemSet,Integer>>();
-    double supportThresholdPer =40;//1;
+    HashMap<ItemSet,Integer> supportReduceOutputsLastGen =new HashMap<ItemSet,Integer>();
+    double supportThresholdPer =0.8;//1;
     int supportThreashold =0;
 
 
     HashMap<ItemSet,HashMap<ItemSet,Integer>> confidanceMapOutput =new HashMap<ItemSet,HashMap<ItemSet,Integer>>();
     HashMap<ItemSet,HashMap<ItemSet,Double>> confidanceReduceOutput1=new HashMap<ItemSet,HashMap<ItemSet,Double>>();
     ArrayList<Rule> confidanceReduceOutput2=new ArrayList<Rule>();
-    double confidanceThresholdPer =50;
+    double confidanceThresholdPer =20;
 
 
     public static void main(String[] args) {
@@ -27,6 +28,7 @@ public class AprioriFlat implements Serializable  {
 
        loadTransactions();
         supportThreashold =(int)((supportThresholdPer *transactions.size())/100);
+        System.out.println("Creating frequent itemsets");
         Map1();
         Reduce1();
         HashMap<ItemSet,Integer> newFrequentItems= supportReduceOutputs.get(supportReduceOutputs.size()-1);
@@ -39,12 +41,14 @@ public class AprioriFlat implements Serializable  {
             i++;
         }
        // Serialize();
+       // print();
 
        // deSerialize();
-        Map3();
+     /*   Map3();
         Reduce2();
         Map4();
-        Reduce3();
+        Reduce3();*/
+        Map31();
 
         print();
     }
@@ -79,17 +83,22 @@ public class AprioriFlat implements Serializable  {
     }
 
     public void loadTransactions(){
-      String[][] data=readFile("./Data/FoodMart.csv");
+     String[][] data=readFile("./Data/FoodMart.csv");
         for (int i = 0; i < data.length; i++) {
             transactions.add(new ItemSet(data[i]));
         }
 
-      /*  transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
+ /*      transactions.add(new ItemSet(new String[]{"A","B","C","D","E","F"}));
         transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
         transactions.add(new ItemSet(new String[]{"A","U","O","F","W","D"}));
-        transactions.add(new ItemSet(new String[]{"O","A","B","C","F","X"}));
-        transactions.add(new ItemSet(new String[]{"O","A","C","D","F","Y"}));
-        transactions.add(new ItemSet(new String[]{"B","C","X","E","W","Z"}));*/
+        transactions.add(new ItemSet(new String[]{"O","A","E","C","F","X"}));
+        transactions.add(new ItemSet(new String[]{"G","A","C","D","E","F"}));*/
+
+   /*    transactions.add(new ItemSet(new String[]{"J","B","C","D","E","F"}));
+        transactions.add(new ItemSet(new String[]{"B","H","S","C","F","T"}));
+        transactions.add(new ItemSet(new String[]{"J","U","F","W","D"}));
+        transactions.add(new ItemSet(new String[]{"J","E","C","F","X"}));
+        transactions.add(new ItemSet(new String[]{"G","J","C","D","E","F"}));*/
 
     }
 
@@ -135,8 +144,6 @@ public class AprioriFlat implements Serializable  {
     }
 
 
-
-
     public void print(){
         System.out.println("Frequent items\n");
         for (int i = 0; i < supportReduceOutputs.size(); i++) {
@@ -173,9 +180,11 @@ public class AprioriFlat implements Serializable  {
 
 
     public void Map21(HashMap<ItemSet,Integer> frequentItems) {
+        System.out.println("Mapping");
         supportMapOutput = new HashMap<ItemSet, Integer>();
         ArrayList<ItemSet> transCands=new ArrayList<ItemSet>();
         Iterator<ItemSet> itr=frequentItems.keySet().iterator();
+        System.out.println(frequentItems.keySet().size());
         while(itr.hasNext()){
             ItemSet source=itr.next();
             Iterator<ItemSet> itr1=frequentItems.keySet().iterator();
@@ -236,7 +245,7 @@ public class AprioriFlat implements Serializable  {
                             }
                         }
 
-                      //  if(pass) {
+                   //    if(pass) {
                             ItemSet candidate = new ItemSet(source, transac.items[j]);
                             if (!transCands.contains(candidate)) {
                                 ArrayList<ItemSet> subSets = candidate.createKmin1Subsets();
@@ -247,7 +256,7 @@ public class AprioriFlat implements Serializable  {
                                 }
                                 transCands.add(candidate);
                             }
-                     //   }
+                       // }
 
                     }
                 }
@@ -273,23 +282,62 @@ public class AprioriFlat implements Serializable  {
 
 
     public void Reduce1(){ //Nothing much to do here in this case because combiner has already done all the work
+        System.out.println("Reducing");
         HashMap<ItemSet,Integer> reducerOutput=new HashMap<ItemSet,Integer>();
         Iterator<ItemSet> itr= supportMapOutput.keySet().iterator();
         while(itr.hasNext()) {
             ItemSet source = itr.next();
             int count= supportMapOutput.get(source);
-            if(count> supportThreashold) {
+            if(count>= supportThreashold) {
                 reducerOutput.put(source, count);
             }
         }
 
         supportReduceOutputs.add(reducerOutput);
+        supportReduceOutputsLastGen=reducerOutput;
     }
 
 
+    HashMap<ItemSet,Integer> allSupportOutputs =new HashMap<ItemSet,Integer>();
 
+    public void Map31() {
+
+        //Unroll
+        for (int i = 0; i < supportReduceOutputs.size(); i++) {
+            HashMap<ItemSet,Integer> current=supportReduceOutputs.get(i);
+            allSupportOutputs.putAll(current);
+            if(current.size()>0){
+                supportReduceOutputsLastGen=current;
+            }
+        }
+        System.out.println(supportReduceOutputsLastGen.size());
+        Iterator<ItemSet> itr = supportReduceOutputsLastGen.keySet().iterator();
+        while (itr.hasNext()) {
+            ItemSet source = itr.next();
+            ruleGenerator(source,source);
+
+        }
+    }
+
+
+        public void ruleGenerator(ItemSet set,ItemSet original){
+            if(set.items.length>1){
+                ArrayList<ItemSet> subsets = set.createKmin1Subsets();
+                for (int i = 0; i < subsets.size(); i++) {
+                    ItemSet subSet=subsets.get(i);
+                    int supportL=allSupportOutputs.get(original);
+                    int supportX=allSupportOutputs.get(subSet);
+                    double confidence=(supportL*100)/supportX;
+                    if(confidence>=confidanceThresholdPer){
+                        confidanceReduceOutput2.add(new Rule(subSet,original.getSetDifference(subSet),confidence));
+                        ruleGenerator(subSet,original);
+                    }
+                }
+            }
+        }
 
     public void Map3(){
+        System.out.println("Mapping");
         for (int i = 0; i < supportReduceOutputs.size(); i++) {
             HashMap<ItemSet,Integer> reduGeneration= supportReduceOutputs.get(i);
             Iterator<ItemSet> itr=reduGeneration.keySet().iterator();
@@ -308,6 +356,7 @@ public class AprioriFlat implements Serializable  {
     }
 
     public void Reduce2() {
+        System.out.println("Reducing");
         Iterator<ItemSet> itr=confidanceMapOutput.keySet().iterator();
         while(itr.hasNext()) {
             ItemSet subset = itr.next();
@@ -338,7 +387,13 @@ public class AprioriFlat implements Serializable  {
         }
     }
 
+
+
+
+
+
     public void Reduce3() {
+        System.out.println("Reducing");
         Iterator<ItemSet> itr=confidanceReduceOutput1.keySet().iterator();
         while(itr.hasNext()) {
             ItemSet q = itr.next();
@@ -384,7 +439,7 @@ public class AprioriFlat implements Serializable  {
             confidanceMapOutput.remove(subset);
         }
         sources.remove(source); //Logically impossible to happen in this case. But leaving here for thread safety.
-            sources.put(source,sourceVal);
+        sources.put(source, sourceVal);
         confidanceMapOutput.put(subset,sources);
     }
 
